@@ -1,5 +1,4 @@
 import colors from '../colors';
-import PreVitaLogo from '../components/PreVitaLogo';
 import { CheckIcon, HistoryIcon, ProfileIcon } from '../components/Icons';
 import BottomNav from '../components/BottomNav';
 import translations from '../i18n';
