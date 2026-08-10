@@ -23,7 +23,15 @@ export default function App() {
   const [currentResult, setCurrentResult] = useState(null);
   const [currentSymptoms, setCurrentSymptoms] = useState([]);
   const [selectedReport, setSelectedReport] = useState(null);
-  const [language, setLanguage] = useState('English');
+//old
+ // const [language, setLanguage] = useState('English');
+//old
+
+//new
+const [language, setLanguage] = useState(
+  () => localStorage.getItem('previta-language') || 'English'
+);
+//new
   const [authMode, setAuthMode] = useState('signup');
   const [apiError, setApiError] = useState(null);
 
@@ -61,6 +69,14 @@ export default function App() {
     };
     setHistory(prev => [entry, ...prev]);
   };
+
+
+  //new
+  const handleLanguageChange = (newLanguage) => {
+  setLanguage(newLanguage);
+  localStorage.setItem('previta-language', newLanguage);
+};
+  //new
 
   const props = { language, onNavigate: navigate };
 
@@ -152,7 +168,10 @@ export default function App() {
       {screen === 'profile' && (
         <ProfileScreen user={user}
           onSignOut={() => { setUser(null); setScreen('splash'); }}
-          onLanguageChange={setLanguage} {...props}
+          // old
+          // onLanguageChange={setLanguage} {...props}
+          // 
+          onLanguageChange={handleLanguageChange} {...props}
         />
       )}
     </div>
