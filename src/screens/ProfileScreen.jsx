@@ -1,14 +1,24 @@
 import { useState } from 'react';
 import colors from '../colors';
+//new
+import translations from '../i18n';
+//new
 import { ProfileIcon, SignOutIcon, TrashIcon } from '../components/Icons';
 import BottomNav from '../components/BottomNav';
 
 export default function ProfileScreen({ user, onNavigate, onSignOut, language, onLanguageChange }) {
+  
+   //new
+  const t = translations[language] || translations.English;
+  //new 
+  
   const [form, setForm] = useState({
     fullName: user?.fullName || 'Abioye Hanat',
     email: user?.email || '',
     phone: user?.phone || '',
   });
+
+
   const [saved, setSaved] = useState(false);
   const [notifications, setNotifications] = useState(true);
 
@@ -48,12 +58,20 @@ export default function ProfileScreen({ user, onNavigate, onSignOut, language, o
         <div style={{ background: colors.surface, borderRadius: 16, padding: '16px', marginBottom: 16, border: `1px solid ${colors.border}` }}>
           <p style={{ fontSize: 12, fontWeight: 600, color: colors.textLight, textTransform: 'uppercase', letterSpacing: '0.06em', margin: '0 0 16px' }}>Profile Update</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-            {[['fullName','Full Name'], ['email','Email'], ['phone','Phone Number']].map(([k, label]) => (
+             {/* {[['fullName','Full Name'], ['email','Email'], ['phone','Phone Number']].map(([k, label]) => (*/}
+            
+             {/* new */}
+             {[
+  ['fullName', t.fullName],
+  ['email', t.email],
+  ['phone', t.phoneNumber]
+].map(([k, label]) => (
+  // new
               <div key={k}>
                 <label style={labelStyle}>{label}</label>
                 <input style={inputStyle} value={form[k]} onChange={e => update(k, e.target.value)} />
               </div>
-            ))}
+            ))} 
           </div>
           <button onClick={() => { setSaved(true); setTimeout(() => setSaved(false), 2000); }} style={{
             width: '100%', padding: 14, borderRadius: 12, border: 'none',
@@ -61,19 +79,20 @@ export default function ProfileScreen({ user, onNavigate, onSignOut, language, o
             color: saved ? colors.primary : '#fff',
             fontSize: 15, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', marginTop: 16,
           }}>
-            {saved ? '✓ Changes saved' : 'Save changes'}
+            {/* {saved ? '✓ Changes saved' : 'Save changes'} */}
+            {saved ? t.changesSaved : t.saveChanges}
           </button>
         </div>
 
         {/* Preferences */}
         <div style={{ background: colors.surface, borderRadius: 16, padding: '16px', marginBottom: 16, border: `1px solid ${colors.border}` }}>
-          <p style={{ fontSize: 12, fontWeight: 600, color: colors.textLight, textTransform: 'uppercase', letterSpacing: '0.06em', margin: '0 0 16px' }}>Preferences</p>
+          <p style={{ fontSize: 12, fontWeight: 600, color: colors.textLight, textTransform: 'uppercase', letterSpacing: '0.06em', margin: '0 0 16px' }}>{t.preferences}</p>
 
           {/* Language — actually works now */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: 14, borderBottom: `1px solid ${colors.border}`, marginBottom: 14 }}>
             <div>
-              <p style={{ fontSize: 14, fontWeight: 600, color: colors.textPrimary, margin: '0 0 2px' }}>Language</p>
-              <p style={{ fontSize: 12, color: colors.textSecondary, margin: 0 }}>App display language</p>
+              <p style={{ fontSize: 14, fontWeight: 600, color: colors.textPrimary, margin: '0 0 2px' }}>{t.language}</p>
+              <p style={{ fontSize: 12, color: colors.textSecondary, margin: 0 }}>{t.appLanguage}</p>
             </div>
             <select
               value={language}
@@ -89,8 +108,8 @@ export default function ProfileScreen({ user, onNavigate, onSignOut, language, o
           {/* Notifications toggle */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
-              <p style={{ fontSize: 14, fontWeight: 600, color: colors.textPrimary, margin: '0 0 2px' }}>Notifications</p>
-              <p style={{ fontSize: 12, color: colors.textSecondary, margin: 0 }}>Reminders and health alerts</p>
+              <p style={{ fontSize: 14, fontWeight: 600, color: colors.textPrimary, margin: '0 0 2px' }}>{t.notifications}</p>
+              <p style={{ fontSize: 12, color: colors.textSecondary, margin: 0 }}>{t.notifSub}</p>
             </div>
             <div onClick={() => setNotifications(!notifications)} style={{
               width: 48, height: 26, borderRadius: 99, cursor: 'pointer',
@@ -110,12 +129,12 @@ export default function ProfileScreen({ user, onNavigate, onSignOut, language, o
         <div style={{ background: colors.surface, borderRadius: 16, overflow: 'hidden', border: `1px solid ${colors.border}` }}>
           <button onClick={onSignOut} style={{ width: '100%', padding: '16px', border: 'none', background: 'none', display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', borderBottom: `1px solid ${colors.border}`, fontFamily: 'inherit' }}>
             <SignOutIcon size={20} color={colors.danger} />
-            <span style={{ fontSize: 15, fontWeight: 600, color: colors.danger }}>Sign out</span>
+            <span style={{ fontSize: 15, fontWeight: 600, color: colors.danger }}>{t.signOutBtn}</span>
             <span style={{ marginLeft: 'auto', color: colors.textLight }}>›</span>
           </button>
           <button style={{ width: '100%', padding: '16px', border: 'none', background: 'none', display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', fontFamily: 'inherit' }}>
             <TrashIcon size={20} color={colors.danger} />
-            <span style={{ fontSize: 15, fontWeight: 600, color: colors.danger }}>Delete account</span>
+            <span style={{ fontSize: 15, fontWeight: 600, color: colors.danger }}>{t.deleteAccount}</span>
             <span style={{ marginLeft: 'auto', color: colors.textLight }}>›</span>
           </button>
         </div>
