@@ -11,8 +11,9 @@ const tabs = [
 export default function BottomNav({ active, onNavigate }) {
   return (
     <div style={{
-      position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)',
-      width: '100%', maxWidth: 430, background: colors.surface,
+      position: 'fixed',
+       bottom: 0, left: 0,
+      width: '100%', background: colors.surface,
       borderTop: `1px solid ${colors.border}`,
       display: 'flex', zIndex: 100, paddingBottom: 8,
     }}>
