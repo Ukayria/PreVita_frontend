@@ -3,57 +3,104 @@ import colors from '../colors';
 import BottomNav from '../components/BottomNav';
 import translations from '../i18n';
 
-const TIPS_DATA = {
-  Hydration: {
-    icon: '💧',
-    title: 'Drink water regularly',
-    category: 'Hydration',
-    short: '8-10 glasses per day. Warm water and teas help with congestion and fever.',
-    description: 'Staying hydrated helps your body fight infection, regulate temperature, and flush out toxins.',
-    steps: [
-      'Start your morning with a full glass of warm water before any food',
-      'Drink a glass every 1-2 hours throughout the day, set a reminder',
-      'Add lemon or ginger to warm water to help with congestion and sore throat',
-      'Avoid cold drinks, alcohol, and excess caffeine while sick, they dehydrate you',
-    ],
-    escalate: 'If you cannot keep fluids down for more than 6 hours or feel extremely dizzy, contact a doctor immediately.',
-  },
-  Rest: {
-    icon: '😴',
-    title: 'Eat light, warm meal',
-    category: 'Rest',
-    short: 'Soup, Pap and soft foods are easy to digest and keep energy up when appetite is low.',
-    description: 'Your body needs energy from food even when you feel weak. Light meals are easier to digest.',
-    steps: [
-      'Eat small portions every 3-4 hours instead of large meals',
-      'Try pap, oatmeal, or light soup with vegetables',
-      'Avoid spicy, fried, or heavy foods that strain your digestive system',
-      'Add protein like eggs or beans to help your body recover faster',
-    ],
-    escalate: 'If you cannot eat for more than 24 hours, seek medical attention.',
-  },
-  Nutrition: {
-    icon: '🛏️',
-    title: 'Rest and avoid exertion',
-    category: 'Nutrition',
-    short: 'Get at least 8 hours of sleep. Avoid strenuous activity until your fever breaks.',
-    description: 'Rest allows your immune system to focus on fighting infection. Overexertion can worsen symptoms.',
-    steps: [
-      'Aim for at least 8-9 hours of sleep each night',
-      'Avoid heavy physical work, exercise, or long commutes',
-      'Keep your room cool and well-ventilated for better sleep quality',
-      'Use a light blanket — heavy sweating can dehydrate you further',
-    ],
-    escalate: 'If fever persists beyond 3 days despite rest, visit a healthcare facility.',
-  },
-};
+// const TIPS_DATA = {
+//   Hydration: {
+//     icon: '💧',
+//     title: 'Drink water regularly',
+//     category: 'Hydration',
+//     short: '8-10 glasses per day. Warm water and teas help with congestion and fever.',
+//     description: 'Staying hydrated helps your body fight infection, regulate temperature, and flush out toxins.',
+//     steps: [
+//       'Start your morning with a full glass of warm water before any food',
+//       'Drink a glass every 1-2 hours throughout the day, set a reminder',
+//       'Add lemon or ginger to warm water to help with congestion and sore throat',
+//       'Avoid cold drinks, alcohol, and excess caffeine while sick, they dehydrate you',
+//     ],
+//     escalate: 'If you cannot keep fluids down for more than 6 hours or feel extremely dizzy, contact a doctor immediately.',
+//   },
+//   Rest: {
+//     icon: '😴',
+//     title: 'Eat light, warm meal',
+//     category: 'Rest',
+//     short: 'Soup, Pap and soft foods are easy to digest and keep energy up when appetite is low.',
+//     description: 'Your body needs energy from food even when you feel weak. Light meals are easier to digest.',
+//     steps: [
+//       'Eat small portions every 3-4 hours instead of large meals',
+//       'Try pap, oatmeal, or light soup with vegetables',
+//       'Avoid spicy, fried, or heavy foods that strain your digestive system',
+//       'Add protein like eggs or beans to help your body recover faster',
+//     ],
+//     escalate: 'If you cannot eat for more than 24 hours, seek medical attention.',
+//   },
+//   Nutrition: {
+//     icon: '🛏️',
+//     title: 'Rest and avoid exertion',
+//     category: 'Nutrition',
+//     short: 'Get at least 8 hours of sleep. Avoid strenuous activity until your fever breaks.',
+//     description: 'Rest allows your immune system to focus on fighting infection. Overexertion can worsen symptoms.',
+//     steps: [
+//       'Aim for at least 8-9 hours of sleep each night',
+//       'Avoid heavy physical work, exercise, or long commutes',
+//       'Keep your room cool and well-ventilated for better sleep quality',
+//       'Use a light blanket — heavy sweating can dehydrate you further',
+//     ],
+//     escalate: 'If fever persists beyond 3 days despite rest, visit a healthcare facility.',
+//   },
+// };
 
 export default function SelfCareScreen({ onBack, onNavigate, language = 'English', symptoms = [], riskSummary = '' }) {
   const t = translations[language] || translations.English;
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedTip, setSelectedTip] = useState(null);
   const [done, setDone] = useState({});
+  // new - start
+const TIPS_DATA = {
+  Hydration: {
+    icon: '💧',
+    titleKey: 'drinkWaterTitle',
+    categoryKey: 'drinkWaterCategory',
+    shortKey: 'drinkWaterShort',
+    descriptionKey: 'drinkWaterDescription',
+    steps: [
+      'drinkWaterStep1',
+      'drinkWaterStep2',
+      'drinkWaterStep3',
+      'drinkWaterStep4',
+    ],
+    escalateKey: 'drinkWaterEscalate',
+  },
 
+  Rest: {
+    icon: '😴',
+    titleKey: 'restTitle',
+    categoryKey: 'restCategory',
+    shortKey: 'restShort',
+    descriptionKey: 'restDescription',
+    steps: [
+      'restStep1',
+      'restStep2',
+      'restStep3',
+      'restStep4',
+    ],
+    escalateKey: 'restEscalate',
+  },
+
+  Nutrition: {
+    icon: '🍲',
+    titleKey: 'lightMealTitle',
+    categoryKey: 'lightMealCategory',
+    shortKey: 'lightMealShort',
+    descriptionKey: 'lightMealDescription',
+    steps: [
+      'lightMealStep1',
+      'lightMealStep2',
+      'lightMealStep3',
+      'lightMealStep4',
+    ],
+    escalateKey: 'lightMealEscalate',
+  },
+};
+// new - end
   const categories = [t.all, t.hydration, t.rest, t.nutrition, t.medication];
   const tips = Object.values(TIPS_DATA);
 
@@ -70,33 +117,137 @@ export default function SelfCareScreen({ onBack, onNavigate, language = 'English
           <h2 style={{ color: '#fff', fontSize: 20, fontWeight: 700, margin: '0 0 4px' }}>
             {tip.title === 'Drink water regularly' ? t.hydration + ' guide' : tip.title}
           </h2>
-          <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 13, margin: 0 }}>Self-care · {symptoms.join(', ')}</p>
+          {/* old */}
+          {/* <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 13, margin: 0 }}>Self-care · {symptoms.join(', ')}</p> */}
+          {/* old */}
+
+          {/* new */}
+          <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 13, margin: 0 }}>
+  {t.selfCareLabel} · {symptoms.join(', ')}
+</p>
+          {/* new */}
+
         </div>
 
         <div style={{ padding: '20px' }}>
           <div style={{ background: colors.surface, borderRadius: 14, padding: '14px 16px', marginBottom: 20, border: `1px solid ${colors.border}`, display: 'flex', gap: 12, alignItems: 'flex-start' }}>
             <div style={{ width: 40, height: 40, borderRadius: 10, background: colors.primaryTint, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>{tip.icon}</div>
             <div>
-              <p style={{ fontSize: 14, fontWeight: 600, color: colors.primary, margin: '0 0 2px' }}>{tip.title}</p>
-              <p style={{ fontSize: 12, color: colors.textSecondary, margin: 0 }}>Category: {tip.category}</p>
+              {/* old */}
+              {/* <p style={{ fontSize: 14, fontWeight: 600, color: colors.primary, margin: '0 0 2px' }}>{tip.title}</p>
+              <p style={{ fontSize: 12, color: colors.textSecondary, margin: 0 }}>Category: {tip.category}</p> */}
+              {/* old */}
+
+              {/* new */}
+              <p style={{
+  fontSize: 14,
+  fontWeight: 600,
+  color: colors.primary,
+  margin: '0 0 2px'
+}}>
+  {t[tip.titleKey]}
+</p>
+
+<p style={{
+  fontSize: 12,
+  color: colors.textSecondary,
+  margin: 0
+}}>
+  {t.selfCareCategory}: {t[tip.categoryKey]}
+</p>
+              {/* new */}
             </div>
           </div>
 
-          <p style={{ fontSize: 14, color: colors.textSecondary, lineHeight: 1.7, marginBottom: 20 }}>{tip.description}</p>
 
+{/*old*/}
+          {/* <p style={{ fontSize: 14, color: colors.textSecondary, lineHeight: 1.7, marginBottom: 20 }}>{tip.description}</p> */}
+    {/* old */}
+
+{/* new */}
+<p style={{
+  fontSize: 14,
+  color: colors.textSecondary,
+  lineHeight: 1.7,
+  marginBottom: 20
+}}>
+  {t[tip.descriptionKey]}
+</p>
+{/* new */}
           <p style={{ fontSize: 13, fontWeight: 700, color: colors.textPrimary, margin: '0 0 12px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{t.howToDoIt}</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 20 }}>
-            {tip.steps.map((step, i) => (
+            {/* old */}
+            {/* {tip.steps.map((step, i) => (
               <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
                 <div style={{ width: 26, height: 26, borderRadius: '50%', background: colors.primary, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700, flexShrink: 0 }}>{i + 1}</div>
                 <p style={{ fontSize: 14, color: colors.textSecondary, margin: 0, lineHeight: 1.6 }}>{step}</p>
               </div>
-            ))}
+            ))} */}
+            {/* old */}
+            {/* new */}
+            {tip.steps.map((stepKey, i) => (
+  <div
+    key={i}
+    style={{
+      display: 'flex',
+      gap: 12,
+      alignItems: 'flex-start'
+    }}
+  >
+    <div style={{
+      width: 26,
+      height: 26,
+      borderRadius: '50%',
+      background: colors.primary,
+      color: '#fff',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: 13,
+      fontWeight: 700,
+      flexShrink: 0
+    }}>
+      {i + 1}
+    </div>
+
+    <p style={{
+      fontSize: 14,
+      color: colors.textSecondary,
+      margin: 0,
+      lineHeight: 1.6
+    }}>
+      {t[stepKey]}
+    </p>
+  </div>
+))}
+            {/* new */}
           </div>
 
           <div style={{ background: colors.dangerTint, borderRadius: 12, padding: '14px 16px', marginBottom: 24, border: `1px solid ${colors.danger}33` }}>
-            <p style={{ fontSize: 13, fontWeight: 700, color: colors.danger, margin: '0 0 6px' }}>{t.whenToEscalate}</p>
-            <p style={{ fontSize: 13, color: '#5C1010', margin: 0, lineHeight: 1.6 }}>{tip.escalate}</p>
+            {/* old */}
+            {/* <p style={{ fontSize: 13, fontWeight: 700, color: colors.danger, margin: '0 0 6px' }}>{t.whenToEscalate}</p>
+            <p style={{ fontSize: 13, color: '#5C1010', margin: 0, lineHeight: 1.6 }}>{tip.escalate}</p> */}
+            {/* old */}
+
+            {/* new */}
+              <p style={{
+    fontSize: 13,
+    fontWeight: 700,
+    color: colors.danger,
+    margin: '0 0 6px'
+  }}>
+    {t.whenToEscalate}
+  </p>
+
+  <p style={{
+    fontSize: 13,
+    color: '#5C1010',
+    margin: 0,
+    lineHeight: 1.6
+  }}>
+    {t[tip.escalateKey]}
+  </p>
+  {/* new */}
           </div>
 
           <button onClick={() => { setDone(p => ({ ...p, [selectedTip]: true })); setSelectedTip(null); }} style={{ width: '100%', padding: 14, borderRadius: 12, border: 'none', background: colors.primary, color: '#fff', fontSize: 15, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', marginBottom: 12 }}>
@@ -154,8 +305,30 @@ export default function SelfCareScreen({ onBack, onNavigate, language = 'English
             }}>
               <div style={{ width: 40, height: 40, borderRadius: 10, background: colors.primaryTint, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>{tip.icon}</div>
               <div style={{ flex: 1 }}>
-                <p style={{ fontSize: 14, fontWeight: 600, color: colors.textPrimary, margin: '0 0 4px' }}>{tip.title}</p>
-                <p style={{ fontSize: 13, color: colors.textSecondary, margin: 0, lineHeight: 1.5 }}>{tip.short}</p>
+                {/* old */}
+                {/* <p style={{ fontSize: 14, fontWeight: 600, color: colors.textPrimary, margin: '0 0 4px' }}>{tip.title}</p>
+                <p style={{ fontSize: 13, color: colors.textSecondary, margin: 0, lineHeight: 1.5 }}>{tip.short}</p> */}
+                {/* old */}
+
+                {/* new */}
+                <p style={{
+  fontSize: 14,
+  fontWeight: 600,
+  color: colors.textPrimary,
+  margin: '0 0 4px'
+}}>
+  {t[tip.titleKey]}
+</p>
+
+<p style={{
+  fontSize: 13,
+  color: colors.textSecondary,
+  margin: 0,
+  lineHeight: 1.5
+}}>
+  {t[tip.shortKey]}
+</p>
+                {/* new */}
               </div>
               {done[Object.keys(TIPS_DATA)[i]] && <span style={{ color: colors.primary, fontSize: 16 }}>✓</span>}
             </div>
@@ -166,7 +339,12 @@ export default function SelfCareScreen({ onBack, onNavigate, language = 'English
           {t.continueBtn}
         </button>
       </div>
-      <BottomNav active="check" onNavigate={onNavigate} />
+      {/* <BottomNav active="check" onNavigate={onNavigate} /> */}
+           <BottomNav
+        active="check"
+        onNavigate={onNavigate}
+        language={language}
+      />
     </div>
   );
 }

@@ -81,13 +81,23 @@ const [language, setLanguage] = useState(
   const props = { language, onNavigate: navigate };
 
   return (
-     <div style={{
+    //old
+    // <div style={{
+    //   maxWidth: 430, margin: '0 auto', minHeight: '100vh',
+    //   background: '#F5F5F5', position: 'relative',
+    //   fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+    // }}>
+    //old
+
+    //new
+    <div style={{
   width: '100%',
   minHeight: '100vh',
   background: '#F5F5F5',
   position: 'relative',
   fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
 }}>
+{/* new */}
       {apiError && (
         <div style={{
           background: '#FEE2E2', padding: '10px 20px', fontSize: 13,

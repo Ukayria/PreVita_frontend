@@ -149,7 +149,12 @@ ${r?.disclaimer}`;
         </div>
       </div>
 
-      <BottomNav active="history" onNavigate={onNavigate} />
+      {/* <BottomNav active="history" onNavigate={onNavigate} /> */}
+           <BottomNav
+  active="history"
+  onNavigate={onNavigate}
+  language={language}
+/>
     </div>
   );
 }

@@ -151,7 +151,12 @@ ${result?.disclaimer}`;
         </button>
       </div>
 
-      <BottomNav active="check" onNavigate={onNavigate} />
+      {/* <BottomNav active="check" onNavigate={onNavigate} /> */}
+           <BottomNav
+  active="check"
+  onNavigate={onNavigate}
+  language={language}
+/>
     </div>
   );
 }

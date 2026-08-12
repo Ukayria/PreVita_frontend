@@ -3,12 +3,16 @@ import colors from '../colors';
 import BottomNav from '../components/BottomNav';
 import translations from '../i18n';
 
-const SYMPTOMS = [
-  'Fever', 'Headache', 'Cough', 'Body pain', 'Fatigue',
-  'Chills', 'Nausea', 'Diarrhea', 'Dizziness', 'Chest pain',
-  'Difficulty breathing', 'Loss of appetite', 'Rash',
-  'Abdominal pain', 'Excessive thirst', 'Rapid heartbeat',
-];
+// const SYMPTOMS = [
+//   'Fever', 'Headache', 'Cough', 'Body pain', 'Fatigue',
+//   'Chills', 'Nausea', 'Diarrhea', 'Dizziness', 'Chest pain',
+//   'Difficulty breathing', 'Loss of appetite', 'Rash',
+//   'Abdominal pain', 'Excessive thirst', 'Rapid heartbeat',
+// ];
+
+
+
+
 
 export default function CheckScreen({ onAnalyze, onBack, onNavigate, language = 'English' }) {
   const t = translations[language] || translations.English;
@@ -16,6 +20,26 @@ export default function CheckScreen({ onAnalyze, onBack, onNavigate, language = 
   const [bodyParts, setBodyParts] = useState([]);
   const [duration, setDuration] = useState('');
   const [severity, setSeverity] = useState('');
+
+  //new
+const SYMPTOMS = [
+  { key: 'fever', label: t.symptoms.fever },
+  { key: 'headache', label: t.symptoms.headache },
+  { key: 'cough', label: t.symptoms.cough },
+  { key: 'bodyPain', label: t.symptoms.bodyPain },
+  { key: 'fatigue', label: t.symptoms.fatigue },
+  { key: 'chills', label: t.symptoms.chills },
+  { key: 'nausea', label: t.symptoms.nausea },
+  { key: 'diarrhea', label: t.symptoms.diarrhea },
+  { key: 'dizziness', label: t.symptoms.dizziness },
+  { key: 'chestPain', label: t.symptoms.chestPain },
+  { key: 'difficultyBreathing', label: t.symptoms.difficultyBreathing },
+  { key: 'lossOfAppetite', label: t.symptoms.lossOfAppetite },
+  { key: 'rash', label: t.symptoms.rash },
+  { key: 'abdominalPain', label: t.symptoms.abdominalPain },
+  { key: 'excessiveThirst', label: t.symptoms.excessiveThirst },
+  { key: 'rapidHeartbeat', label: t.symptoms.rapidHeartbeat },
+];
 
   const toggle = (list, setList, val) =>
     setList(prev => prev.includes(val) ? prev.filter(x => x !== val) : [...prev, val]);
@@ -59,19 +83,67 @@ export default function CheckScreen({ onAnalyze, onBack, onNavigate, language = 
 
       <div style={{ padding: '20px' }}>
         {/* Symptoms */}
-        <div style={{ background: colors.surface, borderRadius: 16, padding: '16px', marginBottom: 16, border: `1px solid ${colors.border}` }}>
+        {/* <div style={{ background: colors.surface, borderRadius: 16, padding: '16px', marginBottom: 16, border: `1px solid ${colors.border}` }}>
           <p style={{ fontSize: 15, fontWeight: 600, color: colors.textPrimary, margin: '0 0 12px' }}>{t.whatSymptoms}</p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             {SYMPTOMS.map(s => (
               <Chip key={s} label={s} selected={symptoms.includes(s)} onClick={() => toggle(symptoms, setSymptoms, s)} />
             ))}
           </div>
+       
           {symptoms.length > 0 && (
             <p style={{ fontSize: 12, color: colors.primary, fontWeight: 600, margin: '10px 0 0' }}>
               ✓ {symptoms.length} {t.selected}
             </p>
           )}
-        </div>
+
+        </div> */}
+
+        {/* Symptoms */}
+<div
+  style={{
+    background: colors.surface,
+    borderRadius: 16,
+    padding: '16px',
+    marginBottom: 16,
+    border: `1px solid ${colors.border}`,
+  }}
+>
+  <p
+    style={{
+      fontSize: 15,
+      fontWeight: 600,
+      color: colors.textPrimary,
+      margin: '0 0 12px',
+    }}
+  >
+    {t.whatSymptoms}
+  </p>
+
+  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+    {SYMPTOMS.map((s) => (
+      <Chip
+        key={s.key}
+        label={s.label}
+        selected={symptoms.includes(s.key)}
+        onClick={() => toggle(symptoms, setSymptoms, s.key)}
+      />
+    ))}
+  </div>
+
+  {symptoms.length > 0 && (
+    <p
+      style={{
+        fontSize: 12,
+        color: colors.primary,
+        fontWeight: 600,
+        margin: '10px 0 0',
+      }}
+    >
+      ✓ {symptoms.length} {t.selected}
+    </p>
+  )}
+</div>
 
         {/* Body parts */}
         <div style={{ background: colors.surface, borderRadius: 16, padding: '16px', marginBottom: 16, border: `1px solid ${colors.border}` }}>
@@ -118,7 +190,13 @@ export default function CheckScreen({ onAnalyze, onBack, onNavigate, language = 
         </button>
       </div>
 
-      <BottomNav active="check" onNavigate={onNavigate} />
+      {/* <BottomNav active="check" onNavigate={onNavigate} /> */}
+      {/* new */}
+      <BottomNav
+  active="check"
+  onNavigate={onNavigate}
+  language={language}
+/>
     </div>
   );
 }

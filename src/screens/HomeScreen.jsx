@@ -134,7 +134,14 @@ export default function HomeScreen({ user, onNavigate, language = 'English', his
         </div>
       </div>
 
-      <BottomNav active="home" onNavigate={onNavigate} />
+      {/* <BottomNav active="home" onNavigate={onNavigate} /> */}
+      
+      {/* new */}
+      <BottomNav
+  active="home"
+  onNavigate={onNavigate}
+  language={language}
+/>
     </div>
   );
 }

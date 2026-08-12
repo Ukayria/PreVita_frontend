@@ -140,7 +140,15 @@ export default function ProfileScreen({ user, onNavigate, onSignOut, language, o
         </div>
       </div>
 
-      <BottomNav active="profile" onNavigate={onNavigate} />
+      {/* <BottomNav active="profile" onNavigate={onNavigate} /> */}
+
+      {/* new */}
+
+      <BottomNav
+  active="profile"
+  onNavigate={onNavigate}
+  language={language}
+/>
     </div>
   );
 }

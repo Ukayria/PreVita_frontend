@@ -64,7 +64,15 @@ export default function HistoryScreen({ history, onNavigate, onViewReport, langu
         )}
       </div>
 
-      <BottomNav active="history" onNavigate={onNavigate} />
+      {/* <BottomNav active="history" onNavigate={onNavigate} /> */}
+
+    {/* new */}
+    <BottomNav
+  active="history"
+  onNavigate={onNavigate}
+  language={language}
+/>
+
     </div>
   );
 }

@@ -1,15 +1,28 @@
 import colors from '../colors';
 import { HomeIcon, CheckIcon, HistoryIcon, ProfileIcon } from './Icons';
+import translations from '../i18n';
 
+// const tabs = [
+//   { id: 'home',    label: 'Home',    Icon: HomeIcon    },
+//   { id: 'check',   label: 'Check',   Icon: CheckIcon   },
+//   { id: 'history', label: 'History', Icon: HistoryIcon },
+//   { id: 'profile', label: 'Profile', Icon: ProfileIcon },
+// ];
+
+
+
+export default function BottomNav({ active, onNavigate, language = 'English' }) {
+  const t = translations[language] || translations.English;
+
+  //new
 const tabs = [
-  { id: 'home',    label: 'Home',    Icon: HomeIcon    },
-  { id: 'check',   label: 'Check',   Icon: CheckIcon   },
-  { id: 'history', label: 'History', Icon: HistoryIcon },
-  { id: 'profile', label: 'Profile', Icon: ProfileIcon },
+  { id: 'home', label: t.home, Icon: HomeIcon },
+  { id: 'check', label: t.check, Icon: CheckIcon },
+  { id: 'history', label: t.history, Icon: HistoryIcon },
+  { id: 'profile', label: t.profile, Icon: ProfileIcon },
 ];
-
-export default function BottomNav({ active, onNavigate }) {
   return (
+
     <div style={{
       position: 'fixed',
        bottom: 0, left: 0,
@@ -17,6 +30,8 @@ export default function BottomNav({ active, onNavigate }) {
       borderTop: `1px solid ${colors.border}`,
       display: 'flex', zIndex: 100, paddingBottom: 8,
     }}>
+  
+
       {tabs.map(({ id, label, Icon }) => {
         const isActive = active === id;
         return (

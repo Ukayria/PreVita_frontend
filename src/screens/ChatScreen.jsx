@@ -16,12 +16,19 @@ async function askPreVitaAI(messages, language) {
   return data.reply;
 }
 
+// for voice language
+
+
+
 export default function ChatScreen({ onBack, language = 'English', user }) {
   const t = translations[language] || translations.English;
   const name = user?.fullName?.split(' ')[0] || 'there';
-
-  const GREETING = `Hi ${name}, I'm PreVita AI. Tell me how you're feeling and I'll help assess your symptoms. What brings you here today?`;
-
+// old
+  // const GREETING = `Hi ${name}, I'm PreVita AI. Tell me how you're feeling and I'll help assess your symptoms. What brings you here today?`;
+// old
+// new
+  const GREETING = t.chatGreeting.replace('{name}', name);
+// new
   const [messages, setMessages] = useState([
     { role: 'assistant', content: GREETING },
   ]);
@@ -29,6 +36,55 @@ export default function ChatScreen({ onBack, language = 'English', user }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const bottomRef = useRef(null);
+
+
+  // voice to text
+  const [listening, setListening] = useState(false);
+
+const startListening = () => {
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (!SpeechRecognition) {
+    alert('Voice input is not supported in this browser.');
+    return;
+  }
+
+  const recognition = new SpeechRecognition();
+
+  const speechLanguages = {
+    English: 'en-US',
+    French: 'fr-FR',
+    Swahili: 'sw-KE',
+    Portuguese: 'pt-PT',
+  };
+
+  recognition.lang = speechLanguages[language] || 'en-US';
+  recognition.interimResults = false;
+  recognition.continuous = false;
+
+  recognition.onstart = () => {
+    setListening(true);
+  };
+
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+
+    setInput(prev =>
+      prev ? `${prev} ${transcript}` : transcript
+    );
+  };
+
+  recognition.onerror = () => {
+    setListening(false);
+  };
+
+  recognition.onend = () => {
+    setListening(false);
+  };
+
+  recognition.start();
+};
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -137,6 +193,29 @@ export default function ChatScreen({ onBack, language = 'English', user }) {
             background: colors.background, color: colors.textPrimary,
           }}
         />
+
+        {/* voice */}
+        <button
+  onClick={startListening}
+  style={{
+    width: 44,
+    height: 44,
+    borderRadius: '50%',
+    background: listening ? colors.danger : colors.primary,
+    border: 'none',
+    color: '#fff',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
+  }}
+>
+  {listening ? '⏹' : '🎤'}
+</button>
+
+
+
         <button onClick={() => send(input)} style={{
           width: 44, height: 44, borderRadius: '50%',
           background: input.trim() ? colors.primary : colors.border,
@@ -149,6 +228,21 @@ export default function ChatScreen({ onBack, language = 'English', user }) {
             <polygon points="22 2 15 22 11 13 2 9 22 2" />
           </svg>
         </button>
+        {/* voice input */}
+        {/* <button
+  onClick={startListening}
+  style={{
+    width: 44,
+    height: 44,
+    borderRadius: '50%',
+    border: 'none',
+    background: listening ? colors.danger : colors.primary,
+    color: '#fff',
+    cursor: 'pointer',
+  }}
+>
+  🎤
+</button> */}
       </div>
 
       <style>{`@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }`}</style>
