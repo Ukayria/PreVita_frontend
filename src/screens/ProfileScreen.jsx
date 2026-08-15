@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useRef } from 'react';
 import colors from '../colors';
 //new
 import translations from '../i18n';
@@ -6,7 +6,7 @@ import translations from '../i18n';
 import { ProfileIcon, SignOutIcon, TrashIcon } from '../components/Icons';
 import BottomNav from '../components/BottomNav';
 
-export default function ProfileScreen({ user, onNavigate, onSignOut, language, onLanguageChange }) {
+export default function ProfileScreen({ user, onNavigate, onSignOut, language, onLanguageChange,onProfileImageUpdate, }) {
   
    //new
   const t = translations[language] || translations.English;
@@ -17,7 +17,91 @@ export default function ProfileScreen({ user, onNavigate, onSignOut, language, o
     email: user?.email || '',
     phone: user?.phone || '',
   });
+// new upload picture
 
+const [profileImage, setProfileImage] = useState(
+  user?.profile_picture || user?.profilePicture || null
+);
+
+const [uploading, setUploading] = useState(false);
+const [uploadError, setUploadError] = useState('');
+
+
+const fileInputRef = useRef(null);
+
+const handleSelectImage = () => {
+  fileInputRef.current?.click();
+};
+
+const handleImageChange = async (e) => {
+  const file = e.target.files?.[0];
+
+  if (!file) return;
+
+  // Check file type
+  if (!file.type.startsWith('image/')) {
+    setUploadError('Please select an image file.');
+    return;
+  }
+
+  // Check file size - 5MB
+  if (file.size > 5 * 1024 * 1024) {
+    setUploadError('Image must be smaller than 5MB.');
+    return;
+  }
+
+  setUploadError('');
+
+  // Show image immediately
+  const previewUrl = URL.createObjectURL(file);
+  setProfileImage(previewUrl);
+
+  // Upload to backend
+  await uploadProfileImage(file);
+};
+
+
+const uploadProfileImage = async (file) => {
+  try {
+    setUploading(true);
+    setUploadError('');
+
+    const formData = new FormData();
+
+    formData.append('profile_picture', file);
+
+    // If your backend requires user ID:
+    formData.append('user_id', user?.id || user?.email);
+
+    const response = await fetch(
+      'https://previta-backend.onrender.com/api/v1/profile/photo',
+      {
+        method: 'POST',
+        body: formData,
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error('Upload failed');
+    }
+
+    const data = await response.json();
+
+    console.log('Upload response:', data);
+
+    // Depending on backend response
+  if (data.profile_picture) {
+  setProfileImage(data.profile_picture);
+}
+
+  } catch (error) {
+    console.error(error);
+    setUploadError('Could not upload profile picture.');
+  } finally {
+    setUploading(false);
+  }
+};
+// new upload picture
 
   const [saved, setSaved] = useState(false);
   const [notifications, setNotifications] = useState(true);
@@ -39,24 +123,131 @@ export default function ProfileScreen({ user, onNavigate, onSignOut, language, o
 
   return (
     <div style={{ minHeight: '100vh', background: colors.background, paddingBottom: 100 }}>
-      <div style={{ background: colors.primary, padding: '48px 24px 24px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-          <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <ProfileIcon size={28} color="#fff" />
-          </div>
-          <div>
-            <h2 style={{ color: '#fff', fontSize: 20, fontWeight: 700, margin: '0 0 2px' }}>{form.fullName}</h2>
-            <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 13, margin: 0 }}>
-              {saved ? 'Your settings have been changed' : 'Tap a field below to edit your profile'}
-            </p>
-          </div>
-        </div>
+  {/* Header */}
+<div style={{ background: colors.primary, padding: '48px 24px 24px' }}>
+
+  <div style={{
+    display: 'flex',
+    alignItems: 'center',
+    gap: 14,
+  }}>
+
+    {/* Profile picture */}
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      flexShrink: 0,
+    }}>
+
+      {/* Profile image */}
+      <div
+        onClick={handleSelectImage}
+        style={{
+          width: 56,
+          height: 56,
+          borderRadius: '50%',
+          background: 'rgba(255,255,255,0.2)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          overflow: 'hidden',
+          cursor: uploading ? 'default' : 'pointer',
+          position: 'relative',
+          flexShrink: 0,
+        }}
+      >
+        {profileImage ? (
+          <img
+            src={profileImage}
+            alt="Profile"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+            }}
+          />
+        ) : (
+          <ProfileIcon size={30} color="#fff" />
+        )}
       </div>
 
+      {/* Change photo button */}
+      <button
+        onClick={handleSelectImage}
+        disabled={uploading}
+        style={{
+          marginTop: 6,
+          background: 'none',
+          border: 'none',
+          color: '#fff',
+          fontSize: 11,
+          fontWeight: 600,
+          padding: 0,
+          cursor: uploading ? 'default' : 'pointer',
+        }}
+      >
+        {uploading ? 'Uploading...' : 'Change photo'}
+      </button>
+
+      {/* Hidden file input */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        onChange={handleImageChange}
+        style={{ display: 'none' }}
+      />
+
+    </div>
+
+    {/* User information */}
+    <div style={{
+      flex: 1,
+      minWidth: 0,
+    }}>
+
+      <h2 style={{
+        color: '#fff',
+        fontSize: 20,
+        fontWeight: 700,
+        margin: '0 0 2px',
+      }}>
+        {form.fullName}
+      </h2>
+
+      <p style={{
+        color: 'rgba(255,255,255,0.75)',
+        fontSize: 13,
+        margin: 0,
+      }}>
+        {saved
+          ? 'Your settings have been changed'
+          : 'Tap a field below to edit your profile'}
+      </p>
+
+      {/* Upload error */}
+      {uploadError && (
+        <p style={{
+          color: '#FFD6D6',
+          fontSize: 12,
+          margin: '6px 0 0',
+        }}>
+          {uploadError}
+        </p>
+      )}
+
+    </div>
+
+  </div>
+
+</div>
+      {/* ------------ */}
       <div style={{ padding: '20px' }}>
         {/* Profile */}
         <div style={{ background: colors.surface, borderRadius: 16, padding: '16px', marginBottom: 16, border: `1px solid ${colors.border}` }}>
           <p style={{ fontSize: 12, fontWeight: 600, color: colors.textLight, textTransform: 'uppercase', letterSpacing: '0.06em', margin: '0 0 16px' }}>Profile Update</p>
+
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
              {/* {[['fullName','Full Name'], ['email','Email'], ['phone','Phone Number']].map(([k, label]) => (*/}
             

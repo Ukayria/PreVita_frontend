@@ -179,71 +179,144 @@ const startListening = () => {
         <div ref={bottomRef} />
       </div>
 
-      {/* Input */}
-      <div style={{ padding: '12px 16px 32px', background: colors.surface, borderTop: `1px solid ${colors.border}`, display: 'flex', gap: 10, alignItems: 'center', flexShrink: 0 }}>
-        <input
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          onKeyDown={e => e.key === 'Enter' && send(input)}
-          placeholder={t.chatPlaceholder}
-          style={{
-            flex: 1, padding: '12px 16px', borderRadius: 99,
-            border: `1px solid ${colors.border}`, fontSize: 14,
-            outline: 'none', fontFamily: 'inherit',
-            background: colors.background, color: colors.textPrimary,
-          }}
-        />
-
-        {/* voice */}
-        <button
-  onClick={startListening}
+      {/* Input New*/}
+      <div
   style={{
-    width: 44,
-    height: 44,
-    borderRadius: '50%',
-    background: listening ? colors.danger : colors.primary,
-    border: 'none',
-    color: '#fff',
-    cursor: 'pointer',
+    width: '100%',
+    boxSizing: 'border-box',
+    padding: '12px 16px 32px',
+    background: colors.surface,
+    borderTop: `1px solid ${colors.border}`,
     display: 'flex',
-    alignItems: 'center',
     justifyContent: 'center',
     flexShrink: 0,
   }}
 >
-  {listening ? '⏹' : '🎤'}
-</button>
+  <div
+    style={{
+      width: '100%',
+      maxWidth: 700,
+      display: 'flex',
+      gap: 10,
+      alignItems: 'center',
+    }}
+  >
+    {/* Input
+    <input
+      value={input}
+      onChange={e => setInput(e.target.value)}
+      onKeyDown={e => e.key === 'Enter' && send(input)}
+      placeholder={t.chatPlaceholder}
+      style={{
+        flex: 1,
+        minWidth: 0,
+        padding: '12px 16px',
+        borderRadius: 99,
+        border: `1px solid ${colors.border}`,
+        fontSize: 14,
+        outline: 'none',
+        fontFamily: 'inherit',
+        background: colors.background,
+        color: colors.textPrimary,
+        boxSizing: 'border-box',
+      }}
+    /> */}
+    <textarea
+  value={input}
+  onChange={e => {
+    setInput(e.target.value);
 
-
-
-        <button onClick={() => send(input)} style={{
-          width: 44, height: 44, borderRadius: '50%',
-          background: input.trim() ? colors.primary : colors.border,
-          border: 'none', cursor: input.trim() ? 'pointer' : 'default',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-          transition: 'background 0.2s',
-        }}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="22" y1="2" x2="11" y2="13" />
-            <polygon points="22 2 15 22 11 13 2 9 22 2" />
-          </svg>
-        </button>
-        {/* voice input */}
-        {/* <button
-  onClick={startListening}
-  style={{
-    width: 44,
-    height: 44,
-    borderRadius: '50%',
-    border: 'none',
-    background: listening ? colors.danger : colors.primary,
-    color: '#fff',
-    cursor: 'pointer',
+    e.target.style.height = 'auto';
+    e.target.style.height = `${Math.min(e.target.scrollHeight, 120)}px`;
   }}
->
-  🎤
-</button> */}
-      </div>
+  onKeyDown={e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      send(input);
+    }
+  }}
+  placeholder={t.chatPlaceholder}
+  rows={1}
+  style={{
+    flex: 1,
+    minWidth: 0,
+    minHeight: 44,
+    maxHeight: 120,
+    padding: '12px 16px',
+    borderRadius: 22,
+    border: `1px solid ${colors.border}`,
+    fontSize: 14,
+    outline: 'none',
+    fontFamily: 'inherit',
+    background: colors.background,
+    color: colors.textPrimary,
+    boxSizing: 'border-box',
+    resize: 'none',
+    overflowY: 'auto',
+    lineHeight: 1.5,
+  }}
+/>
+
+    {/* Voice */}
+    <button
+      onClick={startListening}
+      aria-label="Voice input"
+      style={{
+        width: 44,
+        height: 44,
+        minWidth: 44,
+        borderRadius: '50%',
+        background: listening ? colors.danger : colors.primary,
+        border: 'none',
+        color: '#fff',
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexShrink: 0,
+        fontSize: 18,
+      }}
+    >
+      {listening ? '⏹' : '🎤'}
+    </button>
+
+    {/* Send */}
+    <button
+      onClick={() => send(input)}
+      disabled={!input.trim()}
+      style={{
+        width: 44,
+        height: 44,
+        minWidth: 44,
+        borderRadius: '50%',
+        background: input.trim() ? colors.primary : colors.border,
+        border: 'none',
+        cursor: input.trim() ? 'pointer' : 'default',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexShrink: 0,
+        transition: 'background 0.2s',
+      }}
+    >
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#fff"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <line x1="22" y1="2" x2="11" y2="13" />
+        <polygon points="22 2 15 22 11 13 2 9 22 2" />
+      </svg>
+    </button>
+  </div>
+</div>
+      {/* Input New */}
+      
 
       <style>{`@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }`}</style>
     </div>

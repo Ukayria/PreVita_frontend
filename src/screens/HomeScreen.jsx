@@ -3,34 +3,48 @@ import { CheckIcon, HistoryIcon, ProfileIcon } from '../components/Icons';
 import BottomNav from '../components/BottomNav';
 import translations from '../i18n';
 
-const ALL_TIPS = [
-  'Drink at least 8 glasses of water daily to support kidney function.',
-  'Get 7–8 hours of sleep — your body heals while you rest.',
-  'Wash your hands frequently — it prevents 80% of common infections.',
-  'Check your blood pressure regularly, even if you feel fine.',
-  'Reduce salt intake to lower your risk of hypertension.',
-  'Use mosquito nets and repellents every night to prevent malaria.',
-  'Eat iron-rich foods like beans and leafy greens to prevent anaemia.',
-  'Any fever lasting more than 3 days needs professional attention.',
-  'Limit sugar intake — diabetes rates are rising across Africa.',
-  'Do routine malaria and typhoid tests, even without symptoms.',
-  'Talk to someone you trust about how you feel — mental health matters.',
-  'Visit a clinic at least once a year for a routine check-up.',
-  'Complete your full course of antibiotics — never stop early.',
-  'Eat breakfast — it stabilises blood sugar and improves focus.',
-  'Breathe fresh air — avoid poorly ventilated spaces.',
-];
+// const ALL_TIPS = [
+//   'Drink at least 8 glasses of water daily to support kidney function.',
+//   'Get 7–8 hours of sleep — your body heals while you rest.',
+//   'Wash your hands frequently — it prevents 80% of common infections.',
+//   'Check your blood pressure regularly, even if you feel fine.',
+//   'Reduce salt intake to lower your risk of hypertension.',
+//   'Use mosquito nets and repellents every night to prevent malaria.',
+//   'Eat iron-rich foods like beans and leafy greens to prevent anaemia.',
+//   'Any fever lasting more than 3 days needs professional attention.',
+//   'Limit sugar intake — diabetes rates are rising across Africa.',
+//   'Do routine malaria and typhoid tests, even without symptoms.',
+//   'Talk to someone you trust about how you feel — mental health matters.',
+//   'Visit a clinic at least once a year for a routine check-up.',
+//   'Complete your full course of antibiotics — never stop early.',
+//   'Eat breakfast — it stabilises blood sugar and improves focus.',
+//   'Breathe fresh air — avoid poorly ventilated spaces.',
+// ];
 
-function getDailyTip() {
-  const seed = new Date().getDay() + new Date().getDate();
-  return ALL_TIPS[seed % ALL_TIPS.length];
-}
+// function getDailyTip() {
+//   const seed = new Date().getDay() + new Date().getDate();
+//   return ALL_TIPS[seed % ALL_TIPS.length];
+// }
 
 export default function HomeScreen({ user, onNavigate, language = 'English', history = [] }) {
+  
+ 
   const t = translations[language] || translations.English;
+
   const name = user?.fullName?.split(' ')[0] || 'there';
-  const tip = getDailyTip();
+  // old
+  // const tip = getDailyTip();
+  // old
+
+  //new
+  const tips = t.healthTips || translations.English.healthTips;
+  const seed = new Date().getDay() + new Date().getDate();
+  const tip = tips[seed % tips.length];
+  //new
+
   const recent = history.slice(0, 2);
+
+  
 
   const riskColor = {
     Low: colors.primary,

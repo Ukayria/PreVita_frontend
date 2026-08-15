@@ -76,11 +76,47 @@ const SYMPTOMS = [
 
   return (
     <div style={{ minHeight: '100vh', background: colors.background, paddingBottom: 100 }}>
-      <div style={{ background: colors.primary, padding: '48px 24px 24px' }}>
+      {/* old */}
+      {/* <div style={{ background: colors.primary, padding: '48px 24px 24px' }}>
         <button onClick={onBack} style={{ background: 'none', border: 'none', color: '#fff', fontSize: 20, cursor: 'pointer', marginBottom: 8 }}>←</button>
         <h2 style={{ color: '#fff', fontSize: 20, fontWeight: 700, margin: 0 }}>{t.checkSymptoms}</h2>
-      </div>
+      </div> */}
+      {/* old */}
 
+
+{/* new */}
+<div style={{
+  background: colors.primary,
+  padding: '48px 24px 24px',
+  display: 'flex',
+  alignItems: 'center',
+  gap: 12,
+}}>
+  <button
+    onClick={onBack}
+    style={{
+      background: 'none',
+      border: 'none',
+      color: '#fff',
+      fontSize: 20,
+      cursor: 'pointer',
+      padding: 0,
+      lineHeight: 1,
+    }}
+  >
+    ←
+  </button>
+
+  <h2 style={{
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 700,
+    margin: 0,
+  }}>
+    {t.checkSymptoms}
+  </h2>
+</div>
+{/* new */}
       <div style={{ padding: '20px' }}>
         {/* Symptoms */}
         {/* <div style={{ background: colors.surface, borderRadius: 16, padding: '16px', marginBottom: 16, border: `1px solid ${colors.border}` }}>

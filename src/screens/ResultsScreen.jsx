@@ -35,6 +35,69 @@ ${result?.disclaimer}`;
     setTimeout(() => setCopied(false), 2000);
   };
 
+
+
+  // Download
+const handleDownload = () => {
+  const text = `PreVita Health Report
+
+Risk Level:
+${result?.risk_level || 'N/A'}
+
+Risk Summary:
+${result?.risk_summary || 'N/A'}
+
+Symptoms Detected:
+${symptoms?.length > 0 ? symptoms.join(', ') : 'None'}
+
+Possible Conditions:
+${
+  result?.conditions?.length > 0
+    ? result.conditions
+        .map(
+          c =>
+            `• ${c.name} (${c.likelihood}): ${c.description}`
+        )
+        .join('\n')
+    : 'None'
+}
+
+Recommendations:
+${
+  result?.immediate_actions?.length > 0
+    ? result.immediate_actions.map(a => `• ${a}`).join('\n')
+    : 'None'
+}
+
+Warning Signs:
+${
+  result?.warning_signs?.length > 0
+    ? result.warning_signs.map(s => `• ${s}`).join('\n')
+    : 'None'
+}
+
+Disclaimer:
+${result?.disclaimer || 'This result is not a medical diagnosis.'}
+`;
+
+  const blob = new Blob([text], {
+    type: 'text/plain;charset=utf-8',
+  });
+
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'PreVita-Health-Report.txt';
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  URL.revokeObjectURL(url);
+};
+
+
   const nextSteps = [
     { icon: '📞', label: t.bookTeleconsult, sub: result?.immediate_actions?.[0] || '', action: () => onNavigate('teleconsult') },
     { icon: '🏥', label: t.nearbyClinic,    sub: t.findOpenClinics,                    action: () => onNavigate('nearby')      },
@@ -141,7 +204,7 @@ ${result?.disclaimer}`;
           <button onClick={handleCopy} style={{ flex: 1, padding: 14, borderRadius: 12, border: `1.5px solid ${colors.border}`, background: copied ? colors.primaryTint : colors.surface, color: copied ? colors.primary : colors.textSecondary, fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit' }}>
             {copied ? t.copied : `📋 ${t.copyReport}`}
           </button>
-          <button style={{ flex: 1, padding: 14, borderRadius: 12, border: `1.5px solid ${colors.border}`, background: colors.surface, color: colors.textSecondary, fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit' }}>
+          <button onClick={handleDownload} style={{ flex: 1, padding: 14, borderRadius: 12, border: `1.5px solid ${colors.border}`, background: colors.surface, color: colors.textSecondary, fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit' }}>
             📥 {t.download}
           </button>
         </div>

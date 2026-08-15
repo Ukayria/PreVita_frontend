@@ -195,6 +195,25 @@ restStep2: 'Avoid heavy physical work, exercise, or long commutes',
 restStep3: 'Keep your room cool and well-ventilated for better sleep quality',
 restStep4: 'Use a light blanket — heavy sweating can dehydrate you further',
 restEscalate: 'If fever persists beyond 3 days despite rest, visit a healthcare facility.',
+
+// all tips - home
+healthTips: [
+  'Drink at least 8 glasses of water daily to support kidney function.',
+  'Get 7–8 hours of sleep — your body heals while you rest.',
+  'Wash your hands frequently — it prevents 80% of common infections.',
+  'Check your blood pressure regularly, even if you feel fine.',
+  'Reduce salt intake to lower your risk of hypertension.',
+  'Use mosquito nets and repellents every night to prevent malaria.',
+  'Eat iron-rich foods like beans and leafy greens to prevent anaemia.',
+  'Any fever lasting more than 3 days needs professional attention.',
+  'Limit sugar intake — diabetes rates are rising across Africa.',
+  'Do routine malaria and typhoid tests, even without symptoms.',
+  'Talk to someone you trust about how you feel — mental health matters.',
+  'Visit a clinic at least once a year for a routine check-up.',
+  'Complete your full course of antibiotics — never stop early.',
+  'Eat breakfast — it stabilises blood sugar and improves focus.',
+  'Breathe fresh air — avoid poorly ventilated spaces.',
+],
   },
 
   French: {
@@ -372,6 +391,26 @@ restStep2: 'Évitez les travaux physiques lourds, le sport et les longs trajets'
 restStep3: 'Gardez votre chambre fraîche et bien aérée pour améliorer la qualité du sommeil',
 restStep4: 'Utilisez une couverture légère — une transpiration excessive peut vous déshydrater davantage',
 restEscalate: 'Si la fièvre persiste pendant plus de 3 jours malgré le repos, consultez un établissement de santé.',
+
+
+// all tips - home
+healthTips: [
+  'Buvez au moins 8 verres d’eau par jour pour soutenir la fonction rénale.',
+  'Dormez 7 à 8 heures — votre corps se rétablit pendant votre sommeil.',
+  'Lavez-vous régulièrement les mains — cela aide à prévenir de nombreuses infections courantes.',
+  'Contrôlez régulièrement votre tension artérielle, même si vous vous sentez bien.',
+  'Réduisez votre consommation de sel pour diminuer le risque d’hypertension.',
+  'Utilisez des moustiquaires et des répulsifs chaque nuit pour prévenir le paludisme.',
+  'Mangez des aliments riches en fer comme les haricots et les légumes à feuilles vertes pour prévenir l’anémie.',
+  'Toute fièvre qui dure plus de 3 jours nécessite une attention médicale.',
+  'Limitez votre consommation de sucre — les cas de diabète sont en augmentation en Afrique.',
+  'Faites régulièrement des tests de dépistage du paludisme et de la typhoïde, même sans symptômes.',
+  'Parlez à une personne de confiance de ce que vous ressentez — la santé mentale est importante.',
+  'Consultez une clinique au moins une fois par an pour un contrôle de routine.',
+  'Terminez toujours votre traitement antibiotique — ne l’arrêtez jamais prématurément.',
+  'Prenez votre petit-déjeuner — il stabilise la glycémie et améliore la concentration.',
+  'Respirez de l’air frais — évitez les espaces mal ventilés.',
+],
   },
 
   Swahili: {
@@ -550,7 +589,28 @@ restStep2: 'Epuka kazi nzito za mwili, mazoezi au safari ndefu',
 restStep3: 'Weka chumba chako katika hali ya ubaridi na yenye hewa ya kutosha kwa usingizi bora',
 restStep4: 'Tumia blanketi jepesi — kutokwa na jasho nyingi kunaweza kukupunguzia maji mwilini',
 restEscalate: 'Ikiwa homa itaendelea kwa zaidi ya siku 3 licha ya kupumzika, tembelea kituo cha afya.',
-  },
+  
+// all tips - home
+
+healthTips: [
+  'Kunywa angalau glasi 8 za maji kila siku ili kusaidia utendaji wa figo.',
+  'Lala kwa saa 7–8 — mwili wako hupona unapopumzika.',
+  'Nawa mikono mara kwa mara — husaidia kuzuia maambukizi mengi ya kawaida.',
+  'Pima shinikizo la damu mara kwa mara, hata kama unajisikia vizuri.',
+  'Punguza matumizi ya chumvi ili kupunguza hatari ya shinikizo la damu.',
+  'Tumia vyandarua na dawa za kufukuza mbu kila usiku ili kuzuia malaria.',
+  'Kula vyakula vyenye madini ya chuma kama maharagwe na mboga za majani ili kuzuia upungufu wa damu.',
+  'Homa yoyote inayodumu zaidi ya siku 3 inahitaji ushauri wa mtaalamu wa afya.',
+  'Punguza matumizi ya sukari — visa vya kisukari vinaongezeka barani Afrika.',
+  'Fanya vipimo vya malaria na typhoid mara kwa mara, hata kama huna dalili.',
+  'Zungumza na mtu unayemwamini kuhusu jinsi unavyohisi — afya ya akili ni muhimu.',
+  'Tembelea kliniki angalau mara moja kwa mwaka kwa uchunguzi wa kawaida wa afya.',
+  'Maliza dozi yako yote ya antibiotiki — usiache kutumia mapema.',
+  'Kula kifungua kinywa — husaidia kudhibiti sukari ya damu na kuboresha umakini.',
+  'Pumua hewa safi — epuka maeneo yenye uingizaji hewa hafifu.',
+],
+
+},
 
   Portuguese: {
     splashBtn: 'Começar', splashLogin: 'Já tem uma conta?',
@@ -727,7 +787,28 @@ restStep2: 'Evite trabalhos físicos pesados, exercícios ou deslocamentos longo
 restStep3: 'Mantenha o quarto fresco e bem ventilado para melhorar a qualidade do sono',
 restStep4: 'Use um cobertor leve — a transpiração excessiva pode causar mais desidratação',
 restEscalate: 'Se a febre persistir por mais de 3 dias apesar do descanso, procure uma unidade de saúde.',
-  },
+  
+// all tips - home
+
+healthTips: [
+  'Beba pelo menos 8 copos de água por dia para ajudar no funcionamento dos rins.',
+  'Durma de 7 a 8 horas — seu corpo se recupera enquanto você descansa.',
+  'Lave as mãos frequentemente — isso ajuda a prevenir muitas infecções comuns.',
+  'Verifique sua pressão arterial regularmente, mesmo que você se sinta bem.',
+  'Reduza o consumo de sal para diminuir o risco de hipertensão.',
+  'Use mosquiteiros e repelentes todas as noites para prevenir a malária.',
+  'Coma alimentos ricos em ferro, como feijão e verduras, para prevenir a anemia.',
+  'Qualquer febre que dure mais de 3 dias precisa de atenção médica.',
+  'Limite o consumo de açúcar — os casos de diabetes estão aumentando em África.',
+  'Faça testes de rotina para malária e febre tifoide, mesmo sem sintomas.',
+  'Converse com alguém em quem confia sobre como você se sente — a saúde mental é importante.',
+  'Visite uma clínica pelo menos uma vez por ano para um check-up de rotina.',
+  'Complete todo o tratamento com antibióticos — nunca pare antes do tempo.',
+  'Tome o pequeno-almoço — ajuda a estabilizar o açúcar no sangue e melhora a concentração.',
+  'Respire ar fresco — evite espaços com pouca ventilação.',
+],
+
+},
 };
 
 export default translations;
